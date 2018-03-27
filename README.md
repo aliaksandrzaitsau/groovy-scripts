@@ -16,4 +16,4 @@ To use the GUI or the console shell, you must comment out or uncomment in Calcul
             fcc.runInputConsole();
             //
 ...
-//
+
