@@ -1,0 +1,5 @@
+{
+  "name": "NewUser",
+  "content": "security.addUser('Alex','Alexey','Shumilov','alex@gmail.com',true,'1991',['nx-admin'])",
+  "type": "groovy"
+}
