@@ -1,0 +1,5 @@
+{
+	"name": "3-3",
+	"content": "repository.createMavenHosted('repo_for_small_octopus', 'default')",
+	"type": "groovy"
+}
