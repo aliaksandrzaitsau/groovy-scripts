@@ -6,7 +6,8 @@ class CalculatorFunctionsEquilConsoleInputClass{
             def compilerConfiguration = new CompilerConfiguration()
             def binding = new Binding()
             def shell = new GroovyShell(this.class.classLoader, binding, compilerConfiguration)
-            def result = shell.evaluate input
+            String expression = "$input"
+            def result = shell.evaluate expression
             println result
             return result
         } catch (Exception ex) {
