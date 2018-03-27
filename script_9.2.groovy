@@ -14,7 +14,7 @@ def parent = Jenkins.getInstance()
 //def project = new FreeStyleProject(parent, jobName);
 
 //Define a branch name
-def branchName = "**/azaitsau"
+def branchName = "*/azaitsau"
 
 //Create a parameter for the project
 job = Jenkins.instance.createProject(FreeStyleProject, 'jobName')
