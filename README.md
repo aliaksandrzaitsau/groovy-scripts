@@ -12,5 +12,4 @@
             //
             fcc.runInputConsole();
             //
-...
 
