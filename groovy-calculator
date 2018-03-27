@@ -46,9 +46,9 @@ for (i=0; i < arStr.size(); i++) { //выполняем обратную пол�
                 out.add(stack[k]) //записываем в out всё из стека от ")" до "("
             }
             for (k=indexend.first().toInteger(); k > indexstart.last().toInteger(); k--) {
-                stack.removeAt(del) //удаляем то что записали в out ")" до "("
+                stack.remove(del) //удаляем то что записали в out ")" до "("
             }
-            stack.removeAt(del) //удаляем последнюю "("
+            stack.remove(del) //удаляем последнюю "("
             out.removeAll(')') //очищаем out от ")"
         }
         else {
