@@ -10,7 +10,7 @@ class CalculatorFunctionsConsoleClassTest extends GroovyTestCase {
     }
 
     void testLastConsole() {
-        assertEquals(27, ccl.runEqualConsole(3**3))
+        assertEquals(387420489, ccl.runEqualConsole(3**3**2**3))
     }
 
     void testMinusConsole() {
@@ -35,6 +35,30 @@ class CalculatorFunctionsConsoleClassTest extends GroovyTestCase {
 
     void testProcentConsole() {
         assertEquals(3.0303030303, ccl.runEqualConsole(100/33))
+    }
+
+    void testSqrtConsole() {
+        assertEquals(3.1622776601683795, ccl.runEqualConsole(Math.sqrt(10)))
+    }
+
+    void testAbsConsole() {
+        assertEquals(10, ccl.runEqualConsole(Math.abs(-10)))
+    }
+
+    void testCbrtConsole() {
+        assertEquals(4.932424148660941, ccl.runEqualConsole(Math.cbrt(120)))
+    }
+
+    void testExponentConsole() {
+        assertEquals(6, ccl.runEqualConsole(Math.getExponent(120)))
+    }
+
+    void testLog10tConsole() {
+        assertEquals(2.0791812460476247, ccl.runEqualConsole(Math.log10(120)))
+    }
+
+    void testUlpConsole() {
+        assertEquals(0.0000076293945, ccl.runEqualConsole(Math.ulp(120)))
     }
 
 }
