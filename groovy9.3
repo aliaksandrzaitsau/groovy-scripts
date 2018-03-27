@@ -1,0 +1,12 @@
+/*edit pnexus user:
+change email and password.
+after change password don't need to run the command "security.securitySystem.updateUser(user)"
+In this task was created 3 different tasks in Nexus (Administration -> Tasks)*/ 
+def user = security.securitySystem.getUser('pnexus')
+user.setEmailAddress('lab@dev.com')
+security.securitySystem.updateUser(user)
+security.securitySystem.changePassword('pnexus','lab123')
+//create new user
+security.addUser("student","dev", "ops","lab@lab.com", true,"test", [ 'nx-admin' ])
+//create new repo in default Blob store
+repository.createMavenHosted("lab_devops", "default")
