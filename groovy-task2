@@ -1,0 +1,19 @@
+import jenkins.model.Jenkins
+import hudson.model.FreeStyleProject
+import hudson.tasks.Shell
+import hudson.plugins.git.GitSCM
+import hudson.plugins.git.BranchSpec
+import hudson.plugins.ws_cleanup.PreBuildCleanup
+
+MNTjob = Jenkins.instance.createProject(FreeStyleProject, 'MNT-CD-module9-extcreated-job')
+MNTjob.setDescription("groovy script which create Freestyle job")
+MNTjob.scm = new GitSCM("https://github.com/MNT-Lab/groovy-scripts")
+MNTjob.scm.branches = [new BranchSpec("*/ayarmalovich")]
+
+MNTjob.buildWrappersList.add(new PreBuildCleanup(null, true, "", ""))
+
+MNTjob.buildersList.add(new Shell("echo hello MNT-Lab"))
+MNTjob.save()
+
+build = MNTjob.scheduleBuild2(5, new hudson.model.Cause.UserIdCause())
+build.get()
