@@ -105,4 +105,4 @@ for (i=0; i < ref; i++) {   //выполняем выражение
         break
     }
 }
-println('Result of the mathematical expression = ' + String.format("%.5g%n", out[0]))
+println('Result of the mathematical expression = ' + String.format("%.6g%n", out[0]))
