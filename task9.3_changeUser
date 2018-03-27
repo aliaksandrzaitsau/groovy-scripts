@@ -1,0 +1,5 @@
+{
+  "name": "testUser",
+  "content": "def user = security.securitySystem.getUser('alex');user.setEmailAddress('shumilov@gmail.com');security.securitySystem.updateUser(alex);security.securitySystem.changePassword('alex','admin');",
+  "type": "groovy"
+}
