@@ -1,0 +1,5 @@
+{
+  "name": "repository",
+  "content": "repository.createMavenHosted('AlexRepository', BlobStoreManager.DEFAULT_BLOBSTORE_NAME, VersionPolicy.RELEASE, WritePolicy.ALLOW_ONCE, LayoutPolicy.STRICT))",
+  "type": "groovy"
+}
