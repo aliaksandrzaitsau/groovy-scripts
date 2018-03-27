@@ -1,0 +1,5 @@
+{
+  "name": "Repo",
+  "content": "repository.createMavenHosted('MyRepo')",
+  "type": "groovy"
+}
