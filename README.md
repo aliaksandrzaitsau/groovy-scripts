@@ -12,5 +12,5 @@
             fcc.runInputConsole();
             //
 
-![picture](https://image.ibb.co/m4A2Un/Screenshot_from_2018_03_27_16_08_55.png)
-![alt tag](https://image.ibb.co/m4A2Un/Screenshot_from_2018_03_27_16_08_55.png "Since childhood, I like green")
+            ![picture](https://image.ibb.co/m4A2Un/Screenshot_from_2018_03_27_16_08_55.png)
+
