@@ -1,0 +1,44 @@
+/*The application starts running through:
+groovy SCRIPT_NAME push(pull) FULL_NAME_ARTIFACT
+example:
+groovy task9 pull Tomcat-1.tar.gz
+groovy task9 push Tomcat-2.tar.gz*/
+
+def ACT = args[0]
+def  ART_NAME= args[1]
+/*It's not correct because password send in opening view*/
+def CREDS = "pnexus:pnexus"
+def REPO = "for_tomcat2"
+def NEXUS_PATH = "nexus"
+def GROUP_ID = "grouptest"
+println "GROUP_ID = " + GROUP_ID
+def ART_ID = ART_NAME.substring(0, ART_NAME.indexOf("-"))
+println "ART_ID=" + ART_ID
+def VER = ART_NAME.substring(ART_NAME.lastIndexOf("-")+1, ART_NAME.indexOf("."))
+println "VER = " + VER
+def SUFF = ART_NAME.substring(0, ART_NAME.lastIndexOf("-"))
+println "SUFFIX = " + SUFF
+def EXT = ART_NAME.substring(ART_NAME.indexOf(".")+1)
+def CONVERTED_CREDS = "${CREDS}".getBytes().encodeBase64().toString()
+
+if("$ACT"=="push"){
+    def File = new File ("${ART_NAME}").getBytes()
+    def CONNECTION = new URL("http://${NEXUS_PATH}/repository/${REPO}/${GROUP_ID}/${ART_ID}/${VER}/${SUFF}-${VER}.${EXT}").openConnection()
+    CONNECTION.setRequestProperty("Authorization" , "Basic ${CONVERTED_CREDS}")
+    CONNECTION.setRequestMethod("PUT")
+    CONNECTION.doOutput = true
+    CONNECTION.setRequestProperty( "Content-Type", "application/x-gzip" )
+    def writer = new DataOutputStream(CONNECTION.outputStream)
+    writer.write(File)
+    writer.close()
+    println CONNECTION.responseCode
+}
+
+else {
+    new File("${ART_NAME}").withOutputStream { out ->
+        def url = new URL("http://${NEXUS_PATH}/repository/${REPO}/${GROUP_ID}/${ART_ID}/${VER}/${SUFF}-${VER}.${EXT}").openConnection()
+        def remoteAuth = "Basic " + "${CREDS}".bytes.encodeBase64()
+        url.setRequestProperty("Authorization", remoteAuth);
+        out << url.inputStream
+    }
+}
