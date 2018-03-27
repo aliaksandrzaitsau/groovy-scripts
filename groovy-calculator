@@ -1,0 +1,108 @@
+println('Example - (56*(2/(32+23)*2^5)+654)-465/(26*4)')
+BufferedReader br = new BufferedReader(new InputStreamReader(System.in))
+print "Enter the mathematical expression: "
+
+def math = br.readLine()
+def arStr = (math.split("(?<=\\d)(?=[+\\-*\\\\/()^])|(?<=[+\\-*\\\\/()^])|(?=[+\\-*\\\\/()^])|(?<=[+\\-*\\\\/()^])(?=\\d)")).toList() //парсим строку
+def stack = [] //лист стека
+def out = [] //лист вывода
+
+def oper(o) {
+    def brackets = ['(',')','*','/','+','-','^']
+    for (l=0; l < brackets.size(); l++) { //проверка символ ли это
+        if (brackets[l] == o) {
+            return o
+        }
+    }
+}
+
+static byte priority(p) { //приоритет знаков
+    switch (p) {
+        case '(': return 0;
+        case ')': return 1;
+        case '+': return 2;
+        case '-': return 3;
+        case '*': return 4;
+        case '/': return 4;
+        case '^': return 5;
+        default: return 6;
+    }
+}
+
+for (i=0; i < arStr.size(); i++) { //выполняем обратную польскую нотацию
+    if (arStr[i].isNumber()) { //если число
+        out.add(arStr[i])
+    }
+    if (oper(arStr[i])== arStr[i]) { //если оператор
+        if (arStr[i] == '(') { //если скобка открыта
+            stack.add(arStr[i]) //в стек
+        }
+        else if (arStr[i] == ')') { //если скобка закрыта
+            stack.add(arStr[i])
+            def indexend = stack.findIndexValues { it == ')' } //ищем индексы ")"
+            def indexstart = stack.findIndexValues { it == '(' } //ищем индексы "("
+            def del = indexstart.last().toInteger() // номер индекса последней "("
+            for (k=indexend.first().toInteger(); k > indexstart.last().toInteger(); k--) {
+                out.add(stack[k]) //записываем в out всё из стека от ")" до "("
+            }
+            for (k=indexend.first().toInteger(); k > indexstart.last().toInteger(); k--) {
+                stack.removeAt(del) //удаляем то что записали в out ")" до "("
+            }
+            stack.removeAt(del) //удаляем последнюю "("
+            out.removeAll(')') //очищаем out от ")"
+        }
+        else {
+            if (stack.size() > 0)  //Если в стеке есть элементы
+                if (priority(arStr[i]) <= priority(stack.last())){ //приоритет меньше или равен последнему из стека
+                    def delete = stack.size().toInteger()-1
+                    out.add(stack.last()) //записываем в out последний опер стека
+                    stack.remove(delete) //удаяем из стрека то что записали
+                }
+            stack.add(arStr[i]) //если стек пуст и/или приоритет выше - добавляем опер в стек
+        }
+    }
+}
+
+for (i=stack.size()-1; i >= 0; i--){
+    out.add(stack.last()) //добавляем всё что осталось в стеке
+    stack.remove(i)
+}
+ref = out.size()
+for (i=0; i < ref; i++) {   //выполняем выражение
+    if (oper(out[i]) == out[i]) {
+        a = out[i-1] // Второй элемент
+        b = out[i-2] // Первый элемент
+        switch (out[i]) //И производим над ними действие, согласно оператору
+        {
+            case '+': out[i] = b.toFloat() + a.toFloat() // если + на место опера записываем результат
+                out.remove(i-1)                          // удаляем
+                out.remove(i-2)
+                break
+            case '-': out[i] = b.toFloat() - a.toFloat() //если -
+                out.remove(i-1)
+                out.remove(i-2)
+                break
+            case '*': out[i] = b.toFloat() * a.toFloat() //если *
+                out.remove(i-1)
+                out.remove(i-2)
+                break
+            case '/': out[i] = b.toFloat() / a.toFloat() //если /
+                out.remove(i-1)
+                out.remove(i-2)
+                break
+            case '^':                                    //если ^
+                for (step=0; step < a.toInteger()-1; step++){
+                    out[i-2] = out[i-2].toFloat() * b.toFloat()
+                    //println(out[i-2])
+                }
+                out.remove(i)
+                out.remove(i-1)
+                break
+        }
+        i = 0
+    }
+    if (out.size() == 1) { //если осталось одно значение то break
+        break
+    }
+}
+println('Result of the mathematical expression = ' + String.format("%.5g%n", out[0]))
