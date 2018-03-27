@@ -27,27 +27,14 @@ import java.util.regex.Matcher
 	tempString1 = tempString1.replaceAll("\\)","\\\\\\)")
 	tempString1 = tempString1.replaceAll("\\+","\\\\\\+")
 	tempString1 = tempString1.replaceAll("\\*","\\\\\\*")
-	//println "tempString1 = " + tempString1
-	//tempString1 = "\\(2\\*78\\+54-3\\)"
-	//println "tempString1 = $tempString1"
 	tempString = tempString.replaceAll("\\(","")
 	tempString = tempString.replaceAll("\\)","")
-	//println "tempString = " + tempString
-	//unnessesary treatment	
-	//this block, is like below!!!!!!!!! make like functions
-	//println "TEMP RESULT COMP " + (count_blocks_parent + 1) + " = " + Comp(tempString);
 	without_parent = without_parent.replaceAll(tempString1, Double.toString(Comp(tempString)))
-		//println "tempString2 = " + tempString1
-	//println "result string = " + without_parent
-	//end of block!!!!!!!
 	count_blocks_parent++;
      }
     without_parent = without_parent.replace("--","+")
-    //println "without_parent = " + without_parent
     final_result = Comp(without_parent)
     println "FINAL RESULT = " + final_result
-    //detect how much blocks of level 2 in input string    
-    //println "FINAL RESULT = " + Double.toString(Comp(math_statement));
 
 def Comp(String math_statement)
 {
@@ -64,10 +51,7 @@ def Comp(String math_statement)
  	tempString = m_blocks1.group(0)
 	double intermediate_comp_result
 	math_statement = math_statement.replace(tempString, "");
-	//println "(After transformation) math_statement = " + math_statement
         blocks_composition.push(tempString);
-        //work with first statement of level 1
-		//it's need to learn how much blocks in subString
 	Pattern p_comp = Pattern.compile("[\\*\\/]");
 	Matcher m_comp = p_comp.matcher(tempString)
 	List list_operators = []
@@ -75,7 +59,6 @@ def Comp(String math_statement)
 	while(m_comp.find())
     	 {
 	       list_operators[count_in_sub_string] = m_comp.group(0)
-	       //println "list_operators[" + count_in_sub_string + "] = " + list_operators[count_in_sub_string]
 	       count_in_sub_string++;
 	 }
 	int cnumber_in_sub_string = count_in_sub_string + 1;
@@ -85,43 +68,29 @@ def Comp(String math_statement)
 	Matcher m_numbers_in_sub = numbers_in_sub.matcher(tempString)
 	m_numbers_in_sub.find();
 	tempNumbers.push(Double.parseDouble(m_numbers_in_sub.group(0)));
-	//println "tempNumbers[0] = " + tempNumbers[0]
 
 	tempResult.push(tempNumbers[0])
 	for(int i=1; i<cnumber_in_sub_string; i++)
           {
-		//m_numbers_in_sub.find();
 		m_numbers_in_sub.find();
 		tempNumbers.push(Double.parseDouble(m_numbers_in_sub.group(0)))
 		if(list_operators[i - 1] == '*')
 			tempResult[count_blocks_operators_1] *= tempNumbers[i]
 		else
 			tempResult[count_blocks_operators_1] /= tempNumbers[i]
-		//println Double.toString(i + 1) + " temp_number[i] = " + Double.toString(tempNumbers[i]) 
 	  }
-	//on that moment have numbers in substrings	
-//	//println "Number of blocks in " + tempString + " is " + Double.toString(count_in_sub_string)
 	count_blocks_operators_1++;
      }
-    //println "count blocks of level 1 = " + Double.toString(count_blocks_operators_1);
-    //println blocks_composition
 	if(count_blocks_operators_1 != 0)
 	  {
-	    //println "result of level 1 = " + Double.toString(result_composition);
-	    //println "tempResult = " + tempResult
 	    for(int i=1; i<count_blocks_operators_1; i++)
 		{
 			tempResult[0] += tempResult[i]
 		}
-	    //println "Result of composition = " + tempResult[0]
-	    //make in sequence of priority (* or /)
-	    //println "(After transformation) math_statement = " + math_statement
 	    double intermediate_res = Double.parseDouble(AlgSubMin(math_statement))
 	    intermediate_comp_result = intermediate_res + tempResult[0]
-	    //println "result comp = " + Double.toString(intermediate_comp_result)
 	   }
 	else{
-		//println "No '*' blocks!"
 		intermediate_comp_result = Double.parseDouble(AlgSubMin(math_statement))
 	}
     return intermediate_comp_result
@@ -140,8 +109,7 @@ def AlgSubMin(String math_statement)
 			    while(m_blocks.find())
 			     {	
 				count_blocks_operators++;
-			     }
-			    //println "count blocks of level 2 = " + Double.toString(count_blocks_operators);	
+			     }	
 			    if(count_blocks_operators != 0)
 			       {
 				    int count_numbers = count_blocks_operators + 1;
@@ -151,12 +119,10 @@ def AlgSubMin(String math_statement)
 				    String operators = new String[count_blocks_operators]
 				    m2.find()
 				    testArray[0] = Double.parseDouble(m2.group(0))
-				    //println Double.toString(1) + " number = " + Double.toString(testArray[0])
 				    for(int i = 1; i < count_numbers; i++)
 					{
 					    m2.find()
-					    testArray[i] = Double.parseDouble(m2.group(0))
-					    //println Double.toString(i + 1) + " number = " + Double.toString(testArray[i])    
+					    testArray[i] = Double.parseDouble(m2.group(0))   
 					}
 				    Matcher m_operator = plus.matcher(math_statement);
 				    List tempList = []
@@ -169,7 +135,6 @@ def AlgSubMin(String math_statement)
 					    //form reg expressions
 					    String str1 = Double.toString(testArray[i-1]) + "\\+" + Double.toString(testArray[i])	    
 					    tempList.push(str1)
-					    //println tempList[i-1]
 					    
 					    //do alg_sum!
 					    result += testArray[i]
@@ -179,7 +144,6 @@ def AlgSubMin(String math_statement)
 				{
 					result = Double.parseDouble(math_statement)
 				}
-	//println "intermediate result = " + Double.toString(result);
 	return Double.toString(result)
 }
 
