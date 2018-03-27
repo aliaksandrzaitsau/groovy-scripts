@@ -1,0 +1,5 @@
+{
+	"name": "3-2",
+	"content": "security.addUser('octopus', 'small', 'octopus', 'octopus@gmail.com', true, 'qweasd', [ 'nx-admin' ])",
+	"type": "groovy"
+}
